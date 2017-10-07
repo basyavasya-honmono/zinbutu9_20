@@ -7,7 +7,6 @@ import os
 #人の認識
 f_cascade = cv2.CascadeClassifier('D:/opencv3.2.0/sources/data/haarcascades/haarcascade_fullbody.xml')
  
-
  
 # カメラの起動
 cap = cv2.VideoCapture('D:/opencv3.2.0/sources/samples/data/vtest.avi')
