@@ -11,10 +11,11 @@ f_cascade = cv2.CascadeClassifier('D:/opencv3.2.0/sources/data/haarcascades/haar
 # カメラの起動
 cap = cv2.VideoCapture('C:/human_detection/DCIM/MOV_0166_s.mpg')
 
-ok=0
-all=0
+
+loop_count=0
 bunsi=1
 bunbo=2
+ok=[0]*bunbo
 while(True):
  
     # 動画ストリームからフレームを取得
@@ -23,14 +24,13 @@ while(True):
     #物体認識（人）の実行
     facerect = f_cascade.detectMultiScale(frame, scaleFactor=1.2, minNeighbors=2, minSize=(1, 1))
     print(facerect," ",len(facerect)," ",facerect != ())
-    all=all+1
     if (facerect != ()):
-        ok=ok+1
-    if all==bunbo :
-       if ok/all >= bunsi/bunbo :
-          print ('\007')
-       ok=0
-       all=0
+        ok[loop_count%bunbo]=1
+    else:
+       ok[loop_count%bunbo]=0
+    loop_count+=1
+    if sum(ok) >= bunsi and loop_count>=bunbo:
+       print ('\007')
 
     #検出した人を囲む矩形の作成
     for rect in facerect:
